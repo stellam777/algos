@@ -154,3 +154,108 @@ class BinaryTree {
     this.right = null;
   }
 }
+
+//MINIMUM WAITING TIME
+/* You're given a non-empty array of positive integers representing the amounts
+  of time that specific queries take to execute. Only one query can be executed
+  at a time, but the queries can be executed in any order. A query is defined as the amount of time that it must wait before its execution starts. In other words, if a query is executed
+  second, then its waiting time is the duration of the first query; if a query
+  is executed third, then its waiting time is the sum of the durations of the
+  first two queries. Write a function that returns the minimum waiting time for all of the queries.
+*/
+
+// O(nlogn) time | O(1) space
+function minimumWaitingTime(queries) {
+  queries.sort((a, b) => a - b);
+  let waitingTime = 0;
+  for (let i = 0; i < queries.length; i++) {
+    let query = queries[i];
+    let duration = queries.length - 1 - i;
+    waitingTime += query * duration;
+  }
+  return waitingTime;
+}
+
+// CLASS PHOTO
+/* It's photo day at the local school, and you're the photographer assigned to
+  take class photos. The class that you'll be photographing has an even number
+  of students, and all these students are wearing red or blue shirts. In fact,
+  exactly half of the class is wearing red shirts, and the other half is wearing
+  blue shirts. You're responsible for arranging the students in two rows before
+  taking the photo. Each row should contain the same number of the students and
+  should adhere to the following guidelines:
+   - All students wearing red shirts must be in the same row.
+   - All students wearing blue shirts must be in the same row.
+   - Each student in the back row must be strictly taller than the student
+    directly in front of them in the front row.
+
+  You're given two input arrays: one containing the heights of all the students
+  with red shirts and another one containing the heights of all the students
+  with blue shirts. These arrays will always have the same length, and each
+  height will be a positive integer. Write a function that returns whether or
+  not a class photo that follows the stated guidelines can be taken. */
+
+// O(nlogn) time | O(1) space
+function classPhotos(redShirtHeights, blueShirtHeights) {
+  redShirtHeights.sort((a, b) => a - b);
+  blueShirtHeights.sort((a, b) => a - b);
+  let redShirtFront = redShirtHeights[0] < blueShirtHeights[0] ? true : false;
+  for (let i = 0; i < redShirtHeights.length; i++) {
+    let red = redShirtHeights[i];
+    let blue = blueShirtHeights[i];
+    if (redShirtFront) {
+      if (red >= blue) return false;
+    } else if (blue >= red) return false;
+  }
+  return true;
+}
+
+// TANDEM BICYCLE
+// O(nlogn) time | O(1) space
+function tandemBicycle(redShirtSpeeds, blueShirtSpeeds, fastest) {
+  redShirtSpeeds.sort((a, b) => a - b);
+  blueShirtSpeeds = fastest
+    ? blueShirtSpeeds.sort((a, b) => b - a)
+    : blueShirtSpeeds.sort((a, b) => a - b);
+  let sum = 0;
+  for (let i = 0; i < redShirtSpeeds.length; i++) {
+    sum += Math.max(redShirtSpeeds[i], blueShirtSpeeds[i]);
+  }
+  return sum;
+}
+
+//REMOVE DUPES FROM LINKED LIST
+/* You're given the head of a Singly Linked List whose nodes are in sorted order
+  with respect to their values. Write a function that returns a modified version
+  of the Linked List that doesn't contain any nodes with duplicate values. The
+  Linked List should be modified in place (i.e., you shouldn't create a brand
+  new list), and the modified Linked List should still have its nodes sorted
+  with respect to their values. */
+
+class LinkedList {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+// O(n) time | O(1) space
+function removeDuplicatesFromLinkedList(linkedList) {
+  let current = linkedList;
+  while (current.next) {
+    if (current.value === current.next.value) {
+      current.next = current.next.next;
+    } else {
+      current = current.next;
+    }
+  }
+  return linkedList;
+}
+
+// NTH FIBONACCI
+// O(2^n) time | O(n) space
+function getNthFib(n) {
+  if (n === 1) return 0;
+  if (n === 2) return 1;
+  return getNthFib(n - 1) + getNthFib(n - 2);
+}
