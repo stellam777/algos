@@ -259,3 +259,33 @@ function getNthFib(n) {
   if (n === 2) return 1;
   return getNthFib(n - 1) + getNthFib(n - 2);
 }
+
+// PRODUCT SUM
+// Write a function that takes in a special array and returns the product sum
+
+// O(n) time | O(d) space
+function productSum(arr, depth = 1) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      sum += productSum(arr[i], depth + 1);
+    } else {
+      sum += arr[i];
+    }
+  }
+  sum *= depth;
+  return sum;
+}
+
+// REMOVE ARRAY ELEM
+// Write a function that removes an element from an array in O(1) time
+
+function removeElem(arr, idx) {
+  //[10, 4, 56, 0, 8, 1], 2
+  if (idx === arr.length - 1) return arr.pop();
+  let temp = arr[2];
+  arr[2] = arr[arr.length - 1];
+  arr[arr.length - 1] = temp;
+  arr.pop();
+  return arr;
+}
